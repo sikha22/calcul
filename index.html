@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <title>Dual Calculator</title>
+        <meta charset = "utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://kit.fontawesome.com/edbeb334a3.js" crossorigin="anonymous"></script>
+        <link href = "https://fonts.googleapis.com/css?family=Montserrat" rel = "stylesheet">       
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.1.1/gsap.min.js'></script>
+        <link id = "theme" rel = "stylesheet" type = "text/css" href = "./assets/css/scientific.css">
+    </head>
+    <body>
+      <div class = "mainContainer">
+        <div class="container">
+          <div class="screen">
+              <div class="toggleMode">
+                <label class="switch">
+                    <input type="checkbox" id="checkbox">
+                    <span class="slider move"></span>
+                </label>
+                <span class = "model">Dual Calc</span>
+            </div>
+            <div id="screen-box">
+              <div id = "modes">
+                <span id = "shiftDisplay">Shift</span>
+                <span id = "statDisplay">Stat</span>
+                <span id = "degDisplay">Deg</span>
+                <span id = "radDisplay">Rad</span>
+                <span id = "workArea"></span>
+                <span id = "answer">0</span>
+              </div>
+              <div id="result">
+                 <div id = "input"><input type = "text" id = "inputs" readonly placeholder=""></div>
+                 <div id = "input" class = "combPer">
+                   <input type = "number" pattern = "/^-?\d+\.?\d*$/" onkeypress="if(this.value.length == 4) return false" id = "n" class = "tabs" maxlength="4" autofocus>
+                  <input type = "number" pattern = "/^-?\d+\.?\d*$/" onkeypress="if(this.value.length == 4) return false" id = "r" class = "tabs" maxlength="4">
+                </div>
+                <div id = "main-display"></div>
+              </div>
+              <div id = "size">
+                  <button type="button" id="exit" onclick="hidePrompt()">X</button>
+                  <h6>Choose Population Size:</h6>
+                  <p>
+                      <button id = "complete">Complete (n)</button>
+                      <button id = "sample">Sample(n-1)</button>
+                  </p>
+              </div>
+           </div>
+          </div>
+          
+          <div class="buttons-special">
+              <div class="button spec-action-btn" id = "shift"  onclick="shiftKey(1)">SHIFT</div>
+              <div class="button spec-action-btn" id = "stat" onclick="statKey(1)">STAT</div>
+              <div class="button spec-action-btn" id = "deg" onclick="degree(1)">DEG</div>
+              <div class="button spec-action-btn" id = "rad" onclick="radian(1)">RAD</div>
+              <div class="button spec-action-btn" id = "clr" onclick="clr()">CLR</div>
+              <div class="button spec-action-btn" id = "on" onclick="on()">ON</div>
+              <div class="button spec-action-btn" id = "factorial" onclick="inputKey('!')">x!</div>
+              <div class="button spec-action-btn" id = "inversePower" onclick="reciprocal()">x<span class="sup">-1</span></div>
+              <div class="button spec-action-btn" id = "squarePower" onclick="power2()">x<span class="sup">2</span></div>
+              <div class="button spec-action-btn" id = "squareRoot" onclick="sqrt()">&radic;</div>
+              <div class="button spec-action-btn" id = "cubicPower" onclick="power3()">x<span class="sup">3</span></div>
+              <div class="button spec-action-btn" id = "power" onclick="inputKey('^(')">^</div>
+              <div class="button spec-action-btn" id = "exponent" onclick="eulerOrBaseTwo(1)">e</div>
+              <div class="button spec-action-btn" id = "log" onclick="logOrBaseTen(1)">log</div>
+              <div class="button spec-action-btn" id = "ln" onclick="lnOrExp(1)">ln</div>
+              <div class="button spec-action-btn" id = "sin" onclick="sin(1)">sin</div>
+              <div class="button spec-action-btn" id = "cos" onclick="cos(1)">cos</div>
+              <div class="button spec-action-btn" id = "tan" onclick="tan(1)">tan</div>
+              <div class="button spec-action-btn" id = "sign" onclick="sign()">(-)</div>
+              <div class="button spec-action-btn" id = "comb" onclick="combOrPer()">nCr</div>
+              <div class="button spec-action-btn" id = "open" onclick="opens()">(</div>
+              <div class="button spec-action-btn" id = "close" onclick="inputKey(')')">)</div>
+              <div class="button spec-action-btn" id = "pi" onclick="pi()">&#x3C0 </div>
+              <div class="button spec-action-btn" id = "rand" onclick="random()">Rnd</div>
+              <div class="button spec-action-btn" id = "mean" onclick="mean()">MEAN</div>
+              <div class="button spec-action-btn" id = "median" onclick="median()">MED</div>
+              <div class="button spec-action-btn" id = "mode" onclick="mode()">MODE</div>
+              <div class="button spec-action-btn" id = "range" onclick="range()">RAN</div>
+              <div class="button spec-action-btn" id = "var" onclick="variance()">VAR</div>
+              <div class="button spec-action-btn" id = "sd" onclick="standardDev()">S &#x21DB D</div>  
+          </div>
+        
+          <div class="buttons">  
+            <div class="button num-button seven" onclick="inputKey('7')">7</div>
+            <div class="button num-button eight" onclick="inputKey('8')">8</div>
+            <div class="button num-button  nine" onclick="inputKey('9')">9</div>
+            <div class="button action-btn" id = "del" onclick="del()">DEL</div>
+            <div class="button action-btn" id = "ac" onclick="on()"  onclick="acOrOff('ac')">AC</div>
+            <div class="button num-button  four" onclick="inputKey('4')">4</div>
+            <div class="button num-button  five" onclick="inputKey('5')">5</div>
+            <div class="button num-button  six" onclick="inputKey('6')">6</div>
+            <div class="button num-button  calc-action-btn" onclick="mulDiv('mul')">x</div>
+            <div class="button num-button  calc-action-btn" onclick="mulDiv('div')">÷</div>
+            <div class="button num-button  one" onclick="inputKey('1')">1</div>
+            <div class="button num-button  two" onclick="inputKey('2')">2</div>
+            <div class="button num-button  three" onclick="inputKey('3')">3</div>
+            <div class="button num-button  calc-action-btn" onclick="inputKey('+')">+</div>
+            <div class="button num-button  calc-action-btn" onclick="inputKey('-')">-</div>
+            <div class="button num-button  zero" onclick="inputKey('0')">0</div>
+            <div class="button num-button  point" onclick="inputKey('.')">.</div>
+            <div class="button num-button  action-btn" id = "per" onclick="percent()">%</div>
+            <div class="button num-button  action-btn" id = "ans" onclick="ansOrComma('1')">Ans</div>
+            <div class="button num-button calc-action-btn" id = "equal" onclick="equal()">=</div>
+          </div>
+      
+          <div class ="simple">         
+            <div class="button action-btn" id = "ac"  onclick="on()">AC</div>
+            <div class="button action-btn" id = "del" onclick="del()">DEL</div>
+            <div class="button num-button  action-btn" id = "per" onclick="percent()">%</div>
+            <div class="button num-button  calc-action-btn" id ="divide" onclick="mulDiv('div')">÷</div>
+            <div class="button num-button seven" onclick="inputKey('7')">7</div>
+            <div class="button num-button eight" onclick="inputKey('8')">8</div>
+            <div class="button num-button  nine" onclick="inputKey('9')">9</div>
+            <div class="button num-button  calc-action-btn" id = "multiply" onclick="mulDiv('mul')">x</div>
+            <div class="button num-button  four" onclick="inputKey('4')">4</div>
+            <div class="button num-button  five" onclick="inputKey('5')">5</div>
+            <div class="button num-button  six" onclick="inputKey('6')">6</div>
+            <div class="button num-button  calc-action-btn" id = "minus" onclick="inputKey('-')">-</div>
+            <div class="button num-button  one" onclick="inputKey('1')">1</div>
+            <div class="button num-button  two" onclick="inputKey('2')">2</div>
+            <div class="button num-button  three" onclick="inputKey('3')">3</div>
+            <div class="button num-button  calc-action-btn" id = "plus" onclick="inputKey('+')">+</div>
+            <div class="button num-button  zero" id = "zero" onclick="inputKey('0')">0</div>
+            <div class="button num-button  point" onclick="inputKey('.')">.</div>  
+            <div class="button num-button calc-action-btn" id = "equal" onclick="equal()">=</div>           
+          </div>
+      </div>
+      </div>
+      <div class="footer">
+        <p class="footerText">
+        </p>
+      </div>
+          <script src = "./assets/js/calculator.js"></script>
+    </body>
+</html>
